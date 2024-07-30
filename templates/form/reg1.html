@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Course Details</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .course-card {
+      margin-top: 50px;
+      padding: 20px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .course-card {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body style="background-color: rgb(231, 223, 231);">
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <!-- Course Card -->
+      <div class="card course-card" style="background-color:lightgrey; border:none;">
+        <div class="row no-gutters">
+          <!-- Image Column -->
+          <div class="col-md-6">
+            <img src="https://i.imgur.com/pXJgYAU.jpg" alt="Course Image" class="card-img">
+          </div>
+          <!-- Details Column -->
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">Web Developer</h5>
+              <p class="card-text"><strong>Description:</strong> This comprehensive course covers front-end and back-end web development technologies including HTML, CSS, JavaScript and more.</p>
+              <p class="card-text"><strong>Duration:</strong> 6 weeks(45 Hours)</p>
+              
+              <p class="card-text"><strong>Price:</strong> 799 INR</p>
+              
+              <div class="btn_container">
+                <!-- Payment Button -->
+                <button class="btn" style=" background:blue; color:white;" id="pay-btn">pay now</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  var options = {
+     
+    // Enter the Key ID generated from the Dashboard
+    key: "{{ razorpay_merchant_key }}", 
+     
+    // Amount is in currency subunits.
+    // Default currency is INR. Hence, 
+    // 50000 refers to 50000 paise
+    amount: "{{ razorpay_amount }}", 
+    currency: "{{ currency }}",
+     
+    // Your/store name.
+    name: "Dj Razorpay", 
+     
+    // Pass the `id` obtained in the response of Step 1
+    order_id: "{{ razorpay_order_id }}", 
+    callback_url: "{{ callback_url }}",
+  };
+   
+  // initialise razorpay with the options.
+  var rzp1 = new Razorpay(options);
+   
+  // add event listener to the payment button.
+  document.getElementById("pay-btn").onclick = function (e) {
+    rzp1.open();
+    e.preventDefault();
+  };
+</script>
+</body>
+</html>

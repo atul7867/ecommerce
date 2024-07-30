@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Course Details</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .course-card {
+      margin-top: 50px;
+      padding: 20px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .course-card {
+        margin-top: 20px;
+      }
+    }
+
+    /* Hide the QR code initially */
+    #qr-code {
+      display: none;
+    }
+  </style>
+</head>
+<body style="background-color: rgb(231, 223, 231);">
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <!-- Course Card -->
+      <div class="card course-card" style="background-color:lightgrey; border:none;">
+        <div class="row no-gutters">
+          <!-- Image Column -->
+          <div class="col-md-6">
+            <img src="https://i.imgur.com/H7aOHr7.jpg" alt="SQL Course Image" class="card-img">
+          </div>
+          <!-- Details Column -->
+          <div class="col-md-6">
+            <div class="card-body">
+              <h2>SQL Course</h2>
+              <p><strong>Description:</strong> This SQL course covers fundamental and advanced SQL concepts for database management, querying, and manipulation. Topics include database design, SQL syntax, joins, subqueries, and more.</p>
+              <p><strong>Duration:</strong> 4 weeks</p>
+              <p><strong>Price:</strong> 399 INR</p>
+              <!-- Payment QR Code -->
+              <img id="qr-code" src="https://i.imgur.com/jHRJWiN.jpg
+              " alt="Payment QR Code" class="img-fluid mb-3">
+              <!-- Payment Instructions -->
+              <p><strong>Payment Instructions:</strong> Scan the QR code to make the payment using your preferred payment app.</p>
+              <!-- Enroll Button -->
+              <button id="enroll-btn" class="btn btn-primary">Enroll Now</button>
+              <!-- Enrollment Form -->
+              <form id="enrollment-form" method="post"  style="display: none;">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="username">Username:</label>
+                  <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                  <label for="payment_date">Payment Date:</label>
+                  <input type="date" class="form-control" id="payment_date" name="payment_date" required>
+                </div>
+                <div class="form-group">
+                  <label for="transaction_id">Transaction ID:</label>
+                  <input type="text" class="form-control" id="transaction_id" name="transaction_id" required>
+                </div>
+                <div class="form-group">
+                  <label for="whatsapp_no">WhatsApp Number:</label>
+                  <input type="text" class="form-control" id="whatsapp_no" name="whatsapp_no">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              {% if enrollment_success %}
+                <p class="text-success">{{ enrollment_success }}</p>
+              {% endif %}
+              {% if email_success %}
+                <p class="text-success">{{ email_success }}</p>
+              {% endif %}
+              {% if enrollment_error %}
+                <p class="text-danger">{{ enrollment_error }}</p>
+              {% endif %}
+              {% if email_error %}
+                <p class="text-danger">{{ email_error }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Show enrollment form when enroll button is clicked
+  $(document).ready(function() {
+    $("#enroll-btn").click(function() {
+      $("#qr-code, #enrollment-form").toggle();
+    });
+  });
+</script>
+
+</body>
+</html>
